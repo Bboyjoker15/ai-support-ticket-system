@@ -411,9 +411,9 @@ flowchart TD
     D -->|Si| F[Redirige a /dashboard]
     F --> G[dashboard/page.jsx obtiene rol]
     G --> H{Que rol?}
-    H -->|Admin| I[/dashboard/admin]
-    H -->|Agent| J[/dashboard/agent]
-    H -->|User| K[/dashboard/user]
+    H -->|Admin| I[Ir a /dashboard/admin]
+    H -->|Agent| J[Ir a /dashboard/agent]
+    H -->|User| K[Ir a /dashboard/user]
 ```
 
 ### Proceso de registro
