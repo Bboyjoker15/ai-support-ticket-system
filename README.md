@@ -23,7 +23,7 @@ Toda la logica de backend (persistencia, autenticacion, realtime, IA) vive en **
 
 ## Tabla de contenidos
 
-- [Caracteristicas](#-caracteristicas)
+- [Caracteristicas](##-caracteristicas)
 - [Demo](#-demo)
 - [Arquitectura](#-arquitectura)
 - [Stack tecnico](#-stack-tecnico)
