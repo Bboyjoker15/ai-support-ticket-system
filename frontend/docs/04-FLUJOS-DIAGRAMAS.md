@@ -70,7 +70,7 @@ flowchart TD
     CHECK -->|No| ERROR[Mostrar mensaje de error]
     ERROR --> FORM
     CHECK -->|Si| INSERT[Insertar en public.users<br/>con role = 'User']
-    INSERT --> SUCCESS[Mostrar "Registro exitoso"]
+    INSERT --> SUCCESS[Mostrar registro exitoso]
     SUCCESS --> WAIT[Esperar 2 segundos]
     WAIT --> REDIRECT[Redirigir a /login]
 ```
@@ -81,7 +81,7 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    REQ([Navegacion a /dashboard/*]) --> AUTH[Obtener usuario via<br/>supabase.auth.getUser()]
+    REQ([Navegacion a /dashboard/*]) --> AUTH["Obtener usuario via<br/>supabase.auth.getUser()"]
     AUTH --> CHECK_AUTH{Usuario autenticado?}
     CHECK_AUTH -->|No| LOGIN[Redirigir a /login]
     CHECK_AUTH -->|Si| ROLE[Obtener rol desde<br/>public.users]
@@ -335,64 +335,19 @@ flowchart LR
 
 ## 10. Matriz de permisos RBAC
 
-```mermaid
-flowchart TD
-    subgraph Leyenda
-        L1[✓ = Permitido]
-        L2[✗ = Denegado]
-        L3[~ = Condicional]
-    end
+| # | Capacidad | User | Agent | Admin |
+|:-:|-----------|:----:|:-----:|:-----:|
+| 1 | Crear tickets | ✓ | ✓ | ✓ |
+| 2 | Ver tickets propios | ✓ | ✓ | ✓ |
+| 3 | Chatear en tickets propios | ✓ | ✓ | ✓ |
+| 4 | Ver todos los tickets | ✗ | ✓ | ✓ |
+| 5 | Atender / asignarse tickets | ✗ | ✓ | ✓ |
+| 6 | Resolver tickets | ✗ | ✓ | ✓ |
+| 7 | Ver metricas globales | ✗ | ✗ | ✓ |
+| 8 | Gestionar roles de usuarios | ✗ | ✗ | ✓ |
+| 9 | Expulsar usuarios | ✗ | ✗ | ✓ |
 
-    subgraph Capacidades
-        C1[Crear tickets]
-        C2[Ver tickets propios]
-        C3[Chatear en tickets propios]
-        C4[Ver todos los tickets]
-        C5[Atender / asignarse tickets]
-        C6[Resolver tickets]
-        C7[Ver metricas globales]
-        C8[Gestionar roles]
-        C9[Expulsar usuarios]
-    end
-
-    subgraph Admin["Admin"]
-        A1[✓]
-        A2[✓]
-        A3[✓]
-        A4[✓]
-        A5[✓]
-        A6[✓]
-        A7[✓]
-        A8[✓]
-        A9[✓]
-    end
-
-    subgraph Agent["Agent"]
-        AG1[✓]
-        AG2[✓]
-        AG3[✓]
-        AG4[✓]
-        AG5[✓]
-        AG6[✓]
-        AG7[✗]
-        AG8[✗]
-        AG9[✗]
-    end
-
-    subgraph User["User"]
-        U1[✓]
-        U2[✓]
-        U3[✓]
-        U4[✗]
-        U5[✗]
-        U6[✗]
-        U7[✗]
-        U8[✗]
-        U9[✗]
-    end
-
-    C1 --- Admin --- Agent --- User
-```
+> **Leyenda:** ✓ = Permitido | ✗ = Denegado
 
 ---
 
