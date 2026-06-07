@@ -1,0 +1,14 @@
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# NO ignorar frontend/ - ese es el proyecto Next.js
+# (el .gitignore INTERNO de frontend/ se encarga de node_modules, .next, .env.local, etc.)
