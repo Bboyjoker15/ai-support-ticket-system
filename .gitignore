@@ -12,3 +12,5 @@ $RECYCLE.BIN/
 
 # NO ignorar frontend/ - ese es el proyecto Next.js
 # (el .gitignore INTERNO de frontend/ se encarga de node_modules, .next, .env.local, etc.)
+
+.vercel

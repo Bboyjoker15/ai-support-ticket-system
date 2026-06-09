@@ -23,23 +23,23 @@ Toda la logica de backend (persistencia, autenticacion, realtime, IA) vive en **
 
 ## Tabla de contenidos
 
-- [Caracteristicas](#caracteristicas)
-- [Demo](#demo)
-- [Arquitectura](#arquitectura)
-- [Stack tecnico](#stack-tecnico)
-- [Roles y permisos](#roles-y-permisos)
-- [Estructura del proyecto](#estructura-del-proyecto)
-- [Instalacion](#instalacion)
-- [Variables de entorno](#variables-de-entorno)
-- [Scripts disponibles](#scripts-disponibles)
-- [Esquema de base de datos](#esquema-de-base-de-datos)
-- [Integracion con IA](#integracion-con-ia)
-- [Consideraciones de seguridad](#consideraciones-de-seguridad)
-- [Despliegue](#despliegue)
-- [Roadmap](#roadmap)
-- [Contribucion](#contribucion)
-- [Licencia](#licencia)
-- [Contacto](#contacto)
+- [Caracteristicas](#-caracteristicas)
+- [Demo](#-demo)
+- [Arquitectura](#-arquitectura)
+- [Stack tecnico](#-stack-tecnico)
+- [Roles y permisos](#-roles-y-permisos)
+- [Estructura del proyecto](#-estructura-del-proyecto)
+- [Instalacion](#-instalacion)
+- [Variables de entorno](#-variables-de-entorno)
+- [Scripts disponibles](#-scripts-disponibles)
+- [Esquema de base de datos](#-esquema-de-base-de-datos)
+- [Integracion con IA](#-integracion-con-ia)
+- [Consideraciones de seguridad](#-consideraciones-de-seguridad)
+- [Despliegue](#-despliegue)
+- [Roadmap](#-roadmap)
+- [Contribucion](#-contribucion)
+- [Licencia](#-licencia)
+- [Contacto](#-contacto)
 
 ## Caracteristicas
 
@@ -63,16 +63,18 @@ Toda la logica de backend (persistencia, autenticacion, realtime, IA) vive en **
 ## Demo
 
 > Las capturas de pantalla y un GIF de demostracion se pueden anadir en esta seccion.
-<img width="1397" height="748" alt="image" src="https://github.com/user-attachments/assets/143f9631-2908-4f70-97c5-4ed4e3c3795a" />
-<img width="1398" height="752" alt="image" src="https://github.com/user-attachments/assets/81548c5e-9706-4bdf-ac64-f1f286ec00f7" />
-<img width="1382" height="750" alt="Screenshot 2026-06-07 142841" src="https://github.com/user-attachments/assets/0872684e-c7b1-4c20-bb8c-651f079411e4" />
-<img width="1382" height="751" alt="image" src="https://github.com/user-attachments/assets/48236bb8-bfe3-405b-ba67-480be55eeb75" />
-<img width="1383" height="752" alt="image" src="https://github.com/user-attachments/assets/81c570a9-4a0d-4b04-ab26-1948ffe58a3f" />
-<img width="1379" height="513" alt="image" src="https://github.com/user-attachments/assets/0c164016-3c5c-4d7e-b2c1-d31e1422a1a4" />
-<img width="1385" height="755" alt="image" src="https://github.com/user-attachments/assets/0badc9b9-90ad-4c9a-94a0-8f52e3418fcd" />
-<img width="1382" height="755" alt="image" src="https://github.com/user-attachments/assets/cf5e3965-a9b4-4345-95a3-2fb581450967" />
-<img width="1382" height="328" alt="image" src="https://github.com/user-attachments/assets/65a70c43-0824-45c9-8df1-3c6238dbeb4b" />
-<img width="1385" height="753" alt="image" src="https://github.com/user-attachments/assets/cbac840a-b49a-4344-bb2f-5e186ed82f27" />
+
+```markdown
+<!-- Anadir capturas de pantalla aqui -->
+![Login](./docs/screenshots/login.png)
+![Dashboard Cliente](./docs/screenshots/dashboard-user.png)
+![Mesa de Operaciones](./docs/screenshots/dashboard-agent.png)
+![Panel Admin](./docs/screenshots/dashboard-admin.png)
+![Centro de Metricas](./docs/screenshots/admin-manager.png)
+
+<!-- GIF de demostracion (opcional) -->
+![Demo](./docs/screenshots/demo.gif)
+```
 
 ## Arquitectura
 
@@ -192,7 +194,7 @@ frontend/
 1. **Clonar el repositorio**
 
    ```bash
-   git clone https://github.com/<tu-usuario>/ai-support-ticket-system.git
+   git clone https://github.com/Bboyjoker15/ai-support-ticket-system.git
    cd ai-support-ticket-system/frontend
    ```
 
@@ -499,10 +501,10 @@ Consulta el archivo [`LICENSE`](./LICENSE) para el texto completo.
 
 ## Contacto
 
-- **Autor:** Cesar Velasquez
+- **Autor:** Cesar
 - **GitHub:** [@Bboyjoker15](https://github.com/Bboyjoker15)
-- **Issues:** [github.com/tu-usuario/ai-support-ticket-system/issues](https://github.com/tu-usuario/ai-support-ticket-system/issues)
 
+- **Issues:** [github.com/Bboyjoker15/ai-support-ticket-system/issues](https://github.com/Bboyjoker15/ai-support-ticket-system/issues)
 ---
 
 Hecho con Next.js, Supabase y un poquito de IA.
