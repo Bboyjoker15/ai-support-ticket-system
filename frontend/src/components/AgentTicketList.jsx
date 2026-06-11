@@ -3,6 +3,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
+import { UserCheck, CheckCircle, Sparkles, ArrowRight } from 'lucide-react';
 
 export default function AgentTicketList({
   user,
@@ -18,12 +20,13 @@ export default function AgentTicketList({
   const [priorityFilter, setPriorityFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
 
+  const priorityColors = { High: 'rose', Medium: 'amber', Low: 'emerald' };
+  const statusColors = { Open: 'blue', 'In Progress': 'amber', Resolved: 'emerald' };
+
   const detailBase = adminMode ? '/dashboard/admin/ticket' : '/dashboard/agent';
   const tabActiveClass = adminMode
     ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
     : 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-lg';
-  const titleHover = adminMode ? 'group-hover:text-purple-400' : 'group-hover:text-amber-400';
-
   const fetchTickets = useCallback(async () => {
     try {
       const { data, error } = await supabase
@@ -145,7 +148,7 @@ export default function AgentTicketList({
   return (
     <div className={embedded ? 'space-y-6' : 'space-y-6'}>
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <div className="flex flex-wrap gap-2 bg-slate-900/60 p-1.5 rounded-2xl border border-slate-800 w-full lg:max-w-2xl">
+        <div className="flex flex-wrap gap-2 p-1.5 rounded-2xl border w-full lg:max-w-2xl" style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}>
           {tabLabels.map((tab) => (
             <button
               key={tab.id}
@@ -154,20 +157,21 @@ export default function AgentTicketList({
               className={`flex-1 min-w-[100px] py-2.5 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
                 activeTab === tab.id
                   ? tabActiveClass
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                  : ''
               }`}
+              style={activeTab !== tab.id ? { color: 'var(--color-text-muted)' } : {}}
             >
               {tab.label}
             </button>
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center gap-1.5 bg-slate-900/40 p-2 rounded-2xl border border-slate-800/80">
-          <span className="text-[10px] font-bold uppercase text-slate-500 px-2">
+        <div className="flex flex-wrap items-center gap-1.5 p-2 rounded-2xl border" style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}>
+          <span className="text-[10px] font-bold uppercase px-2" style={{ color: 'var(--color-text-muted)' }}>
             Prioridad:
           </span>
           {[
-            { id: 'All', label: 'Todos', activeStyle: 'bg-slate-800 text-white border-slate-600' },
+            { id: 'All', label: 'Todos', activeStyle: '', activeBg: 'var(--color-bg)', activeText: 'var(--color-text)', activeBorder: 'var(--color-border)' },
             { id: 'High', label: 'Alta', activeStyle: 'bg-rose-500/10 text-rose-400 border-rose-500/30' },
             { id: 'Medium', label: 'Media', activeStyle: 'bg-amber-500/10 text-amber-400 border-amber-500/30' },
             { id: 'Low', label: 'Baja', activeStyle: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' },
@@ -179,8 +183,9 @@ export default function AgentTicketList({
               className={`py-1.5 px-3 rounded-xl text-xs font-semibold border transition ${
                 priorityFilter === btn.id
                   ? btn.activeStyle
-                  : 'bg-transparent border-transparent text-slate-400 hover:text-slate-200'
+                  : ''
               }`}
+              style={priorityFilter !== btn.id ? { color: 'var(--color-text-muted)', background: 'transparent', borderColor: 'transparent' } : btn.id === 'All' ? { backgroundColor: 'var(--color-bg)', color: 'var(--color-text)', borderColor: 'var(--color-border)' } : {}}
             >
               {btn.label}
             </button>
@@ -188,7 +193,7 @@ export default function AgentTicketList({
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-1.5 bg-slate-900/60 p-1 rounded-xl border border-slate-800/80 w-fit">
+      <div className="flex flex-wrap gap-1.5 p-1 rounded-xl border w-fit" style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}>
         {['All', 'Open', 'In Progress', 'Resolved'].map((status) => (
           <button
             key={status}
@@ -196,9 +201,14 @@ export default function AgentTicketList({
             onClick={() => setStatusFilter(status)}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold uppercase transition ${
               statusFilter === status
-                ? 'bg-slate-800 text-white border border-slate-700'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'border'
+                : ''
             }`}
+            style={{
+              backgroundColor: statusFilter === status ? 'var(--color-bg)' : 'transparent',
+              color: statusFilter === status ? 'var(--color-text)' : 'var(--color-text-muted)',
+              borderColor: statusFilter === status ? 'var(--color-border)' : 'transparent',
+            }}
           >
             {status === 'All' ? 'Todos los estados' : status}
           </button>
@@ -206,148 +216,154 @@ export default function AgentTicketList({
       </div>
 
       <div className="flex justify-between items-center">
-        <h3 className="text-lg font-bold text-white">{sectionTitle}</h3>
-        <span className="text-xs text-slate-400 bg-slate-900 px-3 py-1 rounded-full border border-slate-800">
+        <h3 className="text-lg font-bold" style={{ color: 'var(--color-text)' }}>{sectionTitle}</h3>
+        <span className="text-xs px-3 py-1 rounded-full border" style={{ color: 'var(--color-text-muted)', backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}>
           {displayedTickets.length} en vista
         </span>
       </div>
 
       {fetchError ? (
-        <div className="bg-rose-500/10 border border-rose-500/20 rounded-2xl p-6 text-center text-rose-400 text-sm">
+        <div className="border rounded-2xl p-6 text-center text-sm" style={{ backgroundColor: 'rgba(244,63,94,0.1)', borderColor: 'rgba(244,63,94,0.2)', color: '#fb7185' }}>
           Error al sincronizar con Supabase. Refresca la página.
         </div>
       ) : displayedTickets.length === 0 ? (
-        <div className="bg-slate-900/40 border border-slate-800 border-dashed rounded-2xl p-12 text-center">
-          <p className="text-sm text-slate-400">No hay tickets con estos filtros.</p>
+        <div className="border border-dashed rounded-2xl p-12 text-center" style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}>
+          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>No hay tickets con estos filtros.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4">
-          {displayedTickets.map((ticket) => {
-            const assigneeEmail = ticket.assigned_to
-              ? userEmailById[ticket.assigned_to]
-              : null;
-            const detailHref = adminMode
-              ? `${detailBase}/${ticket.id}?from=agent`
-              : `${detailBase}/${ticket.id}`;
+        <div className="space-y-3">
+          <AnimatePresence mode="popLayout">
+            {displayedTickets.map((ticket) => {
+              const assigneeEmail = ticket.assigned_to
+                ? userEmailById[ticket.assigned_to]
+                : null;
+              const detailHref = adminMode
+                ? `${detailBase}/${ticket.id}?from=agent`
+                : `${detailBase}/${ticket.id}`;
+              const pColor = priorityColors[ticket.ai_priority] || 'slate';
+              const sColor = statusColors[ticket.status] || 'slade';
 
-            return (
-              <div
-                key={ticket.id}
-                className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col hover:border-slate-700 transition shadow-md"
-              >
-                <Link href={detailHref} className="group block text-left">
-                  <div className="flex justify-between items-start gap-4 mb-3">
-                    <div>
-                      <span className="text-[10px] font-mono text-slate-500 block mb-0.5">
-                        ID: {ticket.id.slice(0, 8)}…
-                      </span>
-                      <h3
-                        className={`font-semibold text-white text-lg ${titleHover} transition`}
-                      >
-                        {ticket.title}
-                      </h3>
-                      {adminMode && (
-                        <p className="text-[10px] text-slate-500 mt-1">
-                          Asignado:{' '}
-                          <span className="text-slate-400">
-                            {assigneeEmail ||
-                              (ticket.assigned_to
-                                ? `${ticket.assigned_to.slice(0, 8)}…`
-                                : 'Sin asignar')}
+              return (
+                <motion.div
+                  key={ticket.id}
+                  layout
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="rounded-2xl border overflow-hidden"
+                  style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}
+                >
+                  <div className="p-5">
+                    <Link href={detailHref} className="block group">
+                      <div className="flex justify-between items-start gap-4 mb-3">
+                        <div className="flex-1 min-w-0">
+                          <span className="text-[10px] font-mono block mb-0.5" style={{ color: 'var(--color-text-muted)' }}>
+                            ID: {ticket.id?.slice(0, 8)}...
                           </span>
-                        </p>
-                      )}
-                    </div>
-                    <span
-                      className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase border shrink-0 ${
-                        ticket.status === 'Open'
-                          ? 'bg-blue-500/10 border-blue-500/20 text-blue-400'
-                          : ticket.status === 'In Progress'
-                            ? 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-                            : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                      }`}
-                    >
-                      {ticket.status}
-                    </span>
-                  </div>
-
-                  <p className="text-sm text-slate-400 mb-4 p-3 bg-slate-950/20 rounded-xl border border-slate-800/40 line-clamp-3">
-                    {ticket.description}
-                  </p>
-
-                  <div className="space-y-3 bg-slate-950/40 p-4 rounded-xl border border-slate-800/60">
-                    <div className="flex flex-wrap gap-3 text-xs">
-                      <span>
-                        <span className="text-slate-500 uppercase text-[10px] font-bold">
-                          Prioridad:{' '}
-                        </span>
+                          <h3 className="font-semibold text-base transition-colors" style={{ color: 'var(--color-text)' }}>
+                            {ticket.title}
+                          </h3>
+                          {adminMode && (
+                            <p className="text-[10px] mt-1" style={{ color: 'var(--color-text-muted)' }}>
+                              Asignado:{' '}
+                              <span style={{ color: 'var(--color-text-secondary)' }}>
+                                {assigneeEmail ||
+                                  (ticket.assigned_to
+                                    ? `${ticket.assigned_to.slice(0, 8)}…`
+                                    : 'Sin asignar')}
+                              </span>
+                            </p>
+                          )}
+                        </div>
                         <span
-                          className={`font-bold ${
-                            ticket.ai_priority === 'High'
-                              ? 'text-rose-400'
-                              : ticket.ai_priority === 'Medium'
-                                ? 'text-amber-400'
-                                : 'text-emerald-400'
-                          }`}
+                          className="shrink-0 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider border"
+                          style={{
+                            backgroundColor: `rgba(var(--color-${sColor}), 0.1)`,
+                            borderColor: `rgba(var(--color-${sColor}), 0.2)`,
+                            color: `var(--color-${sColor})`,
+                          }}
                         >
-                          {ticket.ai_priority || 'Pendiente'}
+                          {ticket.status}
                         </span>
-                      </span>
-                      <span>
-                        <span className="text-slate-500 uppercase text-[10px] font-bold">
-                          Riesgo:{' '}
-                        </span>
-                        <span className="text-orange-400 font-bold">
-                          {ticket.ai_risk_level || 'Pendiente'}
-                        </span>
-                      </span>
-                    </div>
-                    {ticket.ai_summary && (
-                      <p className="text-xs text-slate-400 italic border-t border-slate-800/50 pt-2">
-                        {ticket.ai_summary}
-                      </p>
-                    )}
-                  </div>
-                </Link>
+                      </div>
 
-                <div className="flex gap-2.5 mt-5 pt-4 border-t border-slate-800/40 justify-end flex-wrap">
-                  <Link
-                    href={detailHref}
-                    className="px-3 py-2 text-xs font-semibold text-slate-400 border border-slate-700 rounded-xl hover:text-white transition"
-                  >
-                    Abrir chat
-                  </Link>
-                  {ticket.status === 'Open' && (
-                    <button
-                      type="button"
-                      onClick={() => handleUpdateStatus(ticket.id, 'In Progress')}
-                      className={`px-4 py-2 text-xs font-bold rounded-xl transition border ${
-                        adminMode
-                          ? 'bg-purple-500/10 border-purple-500/20 text-purple-300 hover:bg-purple-500/20'
-                          : 'bg-amber-500/10 border-amber-500/20 text-amber-400 hover:bg-amber-500/20'
-                      }`}
-                    >
-                      Atender y asignarme
-                    </button>
-                  )}
-                  {ticket.status === 'In Progress' && (
-                    <button
-                      type="button"
-                      onClick={() => handleUpdateStatus(ticket.id, 'Resolved')}
-                      className="px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold rounded-xl hover:bg-emerald-500/20 transition"
-                    >
-                      Resolver ticket
-                    </button>
-                  )}
-                  {ticket.status === 'Resolved' && (
-                    <span className="text-xs font-semibold text-emerald-400 bg-emerald-950/30 border border-emerald-800/50 px-3 py-1.5 rounded-xl uppercase">
-                      Caso cerrado
-                    </span>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+                      <p className="text-sm line-clamp-2 mb-4" style={{ color: 'var(--color-text-secondary)' }}>
+                        {ticket.description}
+                      </p>
+
+                      <div className="p-4 rounded-xl text-xs space-y-2" style={{ backgroundColor: 'var(--color-bg)' }}>
+                        <div className="flex flex-wrap gap-3">
+                          <span className="font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>
+                            Prioridad:{' '}
+                            <span className="font-bold" style={{ color: `var(--color-${pColor})` }}>
+                              {ticket.ai_priority || 'Pendiente'}
+                            </span>
+                          </span>
+                          <span className="font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>
+                            Riesgo:{' '}
+                            <span className="font-bold text-orange-400">{ticket.ai_risk_level || 'Pendiente'}</span>
+                          </span>
+                          <span className="font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>
+                            Clasificación:{' '}
+                            <span className="font-bold text-indigo-400">{ticket.ai_classification || 'Pendiente'}</span>
+                          </span>
+                        </div>
+                        {ticket.ai_summary && (
+                          <div className="flex items-start gap-1.5 pt-1" style={{ borderTop: '1px solid var(--color-border)' }}>
+                            <Sparkles size={12} style={{ color: 'var(--color-brand)' }} className="mt-0.5" />
+                            <p className="italic" style={{ color: 'var(--color-text-secondary)' }}>{ticket.ai_summary}</p>
+                          </div>
+                        )}
+                      </div>
+                    </Link>
+
+                    <div className="flex gap-2 mt-4 pt-4 justify-end" style={{ borderTop: '1px solid var(--color-border)' }}>
+                      {ticket.status === 'Open' && (
+                        <button
+                          type="button"
+                          onClick={() => handleUpdateStatus(ticket.id, 'In Progress')}
+                          className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all"
+                          style={{
+                            backgroundColor: adminMode ? 'rgba(168,85,247,0.1)' : 'rgba(245,158,11,0.1)',
+                            border: adminMode ? '1px solid rgba(168,85,247,0.2)' : '1px solid rgba(245,158,11,0.2)',
+                            color: adminMode ? '#a855f7' : '#f59e0b',
+                          }}
+                        >
+                          <UserCheck size={14} /> Atender
+                        </button>
+                      )}
+                      {ticket.status === 'In Progress' && (
+                        <button
+                          type="button"
+                          onClick={() => handleUpdateStatus(ticket.id, 'Resolved')}
+                          className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all"
+                          style={{
+                            backgroundColor: 'rgba(16,185,129,0.1)',
+                            border: '1px solid rgba(16,185,129,0.2)',
+                            color: '#10b981',
+                          }}
+                        >
+                          <CheckCircle size={14} /> Resolver
+                        </button>
+                      )}
+                      {ticket.status === 'Resolved' && (
+                        <span className="text-xs font-semibold px-3 py-1.5 rounded-xl" style={{ color: 'var(--color-text-muted)' }}>
+                          Cerrado
+                        </span>
+                      )}
+                      <Link
+                        href={detailHref}
+                        className="flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-medium transition-all"
+                        style={{ color: 'var(--color-text-secondary)' }}
+                      >
+                        Detalle <ArrowRight size={12} />
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
         </div>
       )}
     </div>
