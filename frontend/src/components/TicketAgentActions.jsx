@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   UserCheck,
-  CheckCircle2,
+  CheckCircle,
   RotateCcw,
   AlertCircle,
   Loader2,
@@ -23,7 +23,7 @@ const statusActions = {
     {
       label: 'Marcar como Resuelto',
       nextStatus: 'Resolved',
-      icon: CheckCircle2,
+      icon: CheckCircle,
       color: 'emerald',
     },
   ],

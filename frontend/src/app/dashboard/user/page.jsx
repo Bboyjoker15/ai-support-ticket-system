@@ -9,7 +9,7 @@ import {
   Ticket,
   Send,
   AlertCircle,
-  CheckCircle2,
+  CheckCircle,
   Clock,
   Loader2,
   FileText,
@@ -193,7 +193,7 @@ export default function UserDashboardPage() {
         <StatCard icon={Ticket} label="Total Tickets" value={stats.total} color="indigo" />
         <StatCard icon={Clock} label="Abiertos" value={stats.open} color="blue" />
         <StatCard icon={MessageCircle} label="En Progreso" value={stats.inProgress} color="amber" />
-        <StatCard icon={CheckCircle2} label="Resueltos" value={stats.resolved} color="emerald" />
+        <StatCard icon={CheckCircle} label="Resueltos" value={stats.resolved} color="emerald" />
       </div>
 
       {/* Main grid */}
@@ -262,7 +262,7 @@ export default function UserDashboardPage() {
                       color: message.type === 'success' ? '#10b981' : '#f43f5e',
                     }}
                   >
-                    {message.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
+                    {message.type === 'success' ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
                     <p>{message.text}</p>
                   </motion.div>
                 )}

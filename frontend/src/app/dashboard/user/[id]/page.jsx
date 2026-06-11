@@ -15,7 +15,7 @@ import {
   Sparkles,
   User,
   Bot,
-  CheckCircle2,
+  CheckCircle,
   Mail,
 } from 'lucide-react';
 
@@ -337,7 +337,7 @@ export default function UserTicketDetailPage() {
                 color: 'var(--color-text-muted)',
               }}
             >
-              <CheckCircle2 size={14} className="text-emerald-400" />
+              <CheckCircle size={14} className="text-emerald-400" />
               Ticket resuelto. Si tienes otro problema, crea un nuevo ticket.
             </div>
           )}

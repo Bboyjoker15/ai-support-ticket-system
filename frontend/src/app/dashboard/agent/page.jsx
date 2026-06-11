@@ -10,6 +10,7 @@ import {
   Ticket,
   Loader2,
   AlertCircle,
+  CheckCircle,
   ArrowRight,
   Sparkles,
   Users,
@@ -335,7 +336,7 @@ export default function AgentDashboardPage() {
                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(16,185,129,0.15)'}
                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(16,185,129,0.1)'}
                           >
-                            <CheckCircle2 size={14} />
+                            <CheckCircle size={14} />
                             Resolver
                           </button>
                         )}
