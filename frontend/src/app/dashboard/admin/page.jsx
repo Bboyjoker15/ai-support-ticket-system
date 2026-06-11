@@ -19,7 +19,7 @@ import {
   ArrowUpRight,
   Filter,
   X,
-  CheckCircle2,
+  CheckCircle,
   AlertTriangle,
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
@@ -280,7 +280,7 @@ export default function AdminDashboardPage() {
                 <StatCard icon={ClipboardList} label="Total" value={ticketsMetrics.total} color="indigo" />
                 <StatCard icon={AlertCircle} label="Abiertos" value={ticketsMetrics.open} color="blue" />
                 <StatCard icon={BarChart3} label="En Progreso" value={ticketsMetrics.inProgress} color="amber" />
-                <StatCard icon={CheckCircle2} label="Resueltos" value={ticketsMetrics.resolved} color="emerald" />
+                <StatCard icon={CheckCircle} label="Resueltos" value={ticketsMetrics.resolved} color="emerald" />
                 <StatCard icon={AlertTriangle} label="Alta Prioridad" value={ticketsMetrics.highPriority} color="rose" />
                 <StatCard icon={Users} label="Usuarios" value={usersList.length} color="purple" />
               </div>
