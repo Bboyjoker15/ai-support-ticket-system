@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import { MessageCircle } from 'lucide-react';
 
 export default function MessageBell({ userId, userRole, assignedTicketIds = [] }) {
   const [chatNotifications, setChatNotifications] = useState([]);
@@ -100,12 +101,12 @@ export default function MessageBell({ userId, userRole, assignedTicketIds = [] }
       {/* Botón del Chat / Mensajes */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-slate-400 hover:text-white bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-xl transition focus:outline-none"
+        className="relative p-2 rounded-xl transition focus:outline-none"
+        style={{ color: 'var(--color-text-muted)', backgroundColor: 'var(--color-card)', border: '1px solid var(--color-border)' }}
+        onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text)'}
+        onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-muted)'}
       >
-        {/* Ícono de mensaje/burbuja de chat */}
-        <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
+        <MessageCircle size={24} />
 
         {/* Globo indicador azul/celeste para diferenciarlo de las alertas críticas */}
         {unreadCount > 0 && (
